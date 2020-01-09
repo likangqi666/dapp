@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 100px;
+}
+
+.App-header {
+  height: 200px;
+  padding: 20px;
+  color: black;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.App-body {
+  text-align: left;
+  background-repeat:no-repeat;
+}
+
+.App-innerHeader {
+	color : black;
+	background-color : #8CDBFF;
+	font-family : monospace;
+	font-size : 14pt;
+	height : 30px;
+	text-indent : 1em;
+  text-align : center;
+  border-radius: 4px;
+}
+.App-addressinput{
+  width: 200px;
+}
+
+.box {
+  margin: auto;
+	background-color : #C5FFD9;
+	width : 500px;
+	height : 200px;
+	font-family : sans-serif;
+	color : #000000;
+	position : relative;
+  text-indent : 1em;
+  margin : "auto";
+  border-radius: 4px;
+}
