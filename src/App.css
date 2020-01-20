@@ -6,15 +6,14 @@
 }
 
 .App-logo {
-  height: 300px;
+  height: 250px;
 }
 
 .App-header {
-  height: 370px;
+  height: 350px;
   padding: 20px;
   color: black;
   text-align: center;
-
 }
 
 .App-intro {
@@ -52,7 +51,6 @@
 	position : relative;
   text-indent : 1em;
   margin : "auto";
-  border-radius: 4px;
 }
 .box2 {
   margin: auto;
@@ -63,5 +61,10 @@
 	position : relative;
   text-indent : 1em;
   margin : "auto";
-  border-radius: 4px;
+}
+.headerFont {
+  font-size: 30px;
+  color: #A40819;
+  text-shadow: -1.5px 1.5px 0 white, 1.5px 1.5px 0 white,1.5px -1.5px 0 white,-1.5px -1.5px 0 white;
+  font-family: sans-serif;
 }

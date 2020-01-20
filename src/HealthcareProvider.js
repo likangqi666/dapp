@@ -299,8 +299,8 @@ function HealthcareProvider() {
     <div className="App">
         <div className="App-header">
           <img src={"https://cert.ccsemc.com/filing/images/UL_Logo.gif"} className="App-logo" alt="logo" />
-          <h2>Welcome to Healthcare Identity Management System! </h2>
-          <h2>***For healthcare providers*** </h2>
+          <h2 className="headerFont">Healthcare Identity Management System Prototype</h2>
+          <h2 className="headerFont">***Healthcare Providers Interface*** </h2>
         </div>
         <div className = "App-body">
           <div className="box">

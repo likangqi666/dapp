@@ -433,8 +433,8 @@ function InsuranceProvider() {
       <div className="App">
         <div className="App-header">
           <img src={"https://cert.ccsemc.com/filing/images/UL_Logo.gif"} className="App-logo" alt="logo" />
-          <h2>Welcome to Healthcare Identity Management System! </h2>
-          <h2>***For insurance providers***</h2>
+          <h2 className="headerFont">Healthcare Identity Management Prototype </h2>
+          <h2 className="headerFont">***Insurance Providers Interface***</h2>
         </div>
         <p className="App-intro">
         </p>

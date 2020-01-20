@@ -75,6 +75,7 @@ module.exports = {
   appIndexJs: resolveModule(resolveApp, 'src/index'),
   appInsuranceProviderJs: resolveModule(resolveApp, 'src/insuranceProvider'),
   appIssuerJs: resolveModule(resolveApp, 'src/issuer'),
+  appPatientJs: resolveModule(resolveApp, 'src/patient'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

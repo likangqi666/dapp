@@ -158,6 +158,9 @@ module.exports = function(webpackEnv) {
       issuer:  [
         paths.appIssuerJs,
       ].filter(Boolean),
+      patient:  [
+        paths.appPatientJs,
+      ].filter(Boolean),
     },
     output: {
       // The build folder.
@@ -567,6 +570,33 @@ module.exports = function(webpackEnv) {
             template: paths.appHtml,
             filename: 'issuer.html',
             chunks: ['issuer'],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+            filename: 'patient.html',
+            chunks: ['patient'],
           },
           isEnvProduction
             ? {
