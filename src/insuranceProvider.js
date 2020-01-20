@@ -434,7 +434,7 @@ function InsuranceProvider() {
         <div className="App-header">
           <img src={"https://cert.ccsemc.com/filing/images/UL_Logo.gif"} className="App-logo" alt="logo" />
           <h2>Welcome to Healthcare Identity Management System! </h2>
-          <h2>***For insurance providers*** </h2>
+          <h2>***For insurance providers***</h2>
         </div>
         <p className="App-intro">
         </p>
@@ -468,7 +468,4 @@ function InsuranceProvider() {
 
 ReactDOM.render(<InsuranceProvider />, document.getElementById('root'));
 
-// If you want your HealthcareProvider to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

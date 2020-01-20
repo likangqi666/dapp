@@ -154,7 +154,10 @@ module.exports = function(webpackEnv) {
       ].filter(Boolean),
       insuranceProvider:  [
         paths.appInsuranceProviderJs,
-      ].filter(Boolean)
+      ].filter(Boolean),
+      issuer:  [
+        paths.appIssuerJs,
+      ].filter(Boolean),
     },
     output: {
       // The build folder.
@@ -537,6 +540,33 @@ module.exports = function(webpackEnv) {
             template: paths.appHtml,
             filename: 'insuranceProvider.html',
             chunks: ['insuranceProvider'],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+            filename: 'issuer.html',
+            chunks: ['issuer'],
           },
           isEnvProduction
             ? {
