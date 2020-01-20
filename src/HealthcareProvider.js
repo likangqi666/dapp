@@ -1,9 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import logo from './logo.svg';
 import './App.css';
 import Web3 from 'web3';
 import { Table } from 'react-bootstrap';
-import createReactClass from 'create-react-class';
+
 //Setup Styles
 const inputStyle = {
   borderRadius:5,
@@ -60,7 +61,7 @@ if (typeof window.web3 !== 'undefined') {
   // set the provider you want from Web3.providers
   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
-//Before metamask can automatically inject web3 and return the default accounts,
+//Before Metamask can automatically inject web3 and return the default accounts,
 //but this feature has been removed. So I have to hardcode the account here;
 //var accounts = web3.eth.accounts;
 var accounts =["0xa1AF1C42DbF15D0795560AF5Fe0117542c99C8f4"];
@@ -89,7 +90,7 @@ var CheckID = createReactClass({
              resolve(tempRes);
              }
             })
-   })
+    })
   },
   handleInputAddress: function(adr){
     this.setState({address:adr.target.value});
@@ -246,8 +247,8 @@ var MakeClaim = createReactClass({
     },
     addNew: function(item,amount){
       this.setState({
-        items: this.state.items.concat([web3.toBigNumber(item)]),
-        amounts: this.state.amounts.concat([web3.toBigNumber(amount)]),
+        items: this.state.items.concat([web3.utils.toBN(item)]),
+        amounts: this.state.amounts.concat([web3.utils.toBN(amount)]),
         list: this.state.list.concat([{"id": ++this.state.list.length}])
       });
     },
@@ -293,13 +294,13 @@ var ContractInitialization = createReactClass({
   }
 });
 
-
 function HealthcareProvider() {
   return (
     <div className="App">
         <div className="App-header">
           <img src={"https://cert.ccsemc.com/filing/images/UL_Logo.gif"} className="App-logo" alt="logo" />
-          <h2 className = "App-intro">Welcome to Healthcare Identity Management System! </h2>
+          <h2>Welcome to Healthcare Identity Management System! </h2>
+          <h2>***For healthcare providers*** </h2>
         </div>
         <div className = "App-body">
           <div className="box">

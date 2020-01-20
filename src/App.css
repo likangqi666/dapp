@@ -29,6 +29,8 @@
 }
 .App-body {
   text-align: left;
+  position: relative;
+  top: 10px;
 }
 
 .App-innerHeader {
