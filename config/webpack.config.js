@@ -152,6 +152,9 @@ module.exports = function(webpackEnv) {
           require.resolve('react-dev-utils/webpackHotDevClient'),
         paths.appIndexJs,
       ].filter(Boolean),
+      healthcareProvider:  [
+        paths.appHealthcareProviderJs,
+      ].filter(Boolean),
       insuranceProvider:  [
         paths.appInsuranceProviderJs,
       ].filter(Boolean),
@@ -516,6 +519,33 @@ module.exports = function(webpackEnv) {
             inject: true,
             template: paths.appHtml,
             chunks: ['main'],
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+            filename: 'healthcareProvider.html',
+            chunks: ['healthcareProvider'],
           },
           isEnvProduction
             ? {

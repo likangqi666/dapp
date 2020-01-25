@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Web3 from 'web3';
+import * as serviceWorker from './serviceWorker';
 import createReactClass from 'create-react-class';
 import logo from './logo.svg';
 import './App.css';
-import Web3 from 'web3';
-import { Table } from 'react-bootstrap';
 
 //Setup Styles
 const inputStyle = {
@@ -136,6 +137,7 @@ var CheckID = createReactClass({
     );
   }
 });
+
 var MyInfo = createReactClass({
   getInitialState: function(){
     return {hcType:'',hcID:''};
@@ -176,6 +178,7 @@ var MyInfo = createReactClass({
     );
   }
 });
+
 var ClaimList = createReactClass({
     getInitialState: function(){
       return({
@@ -208,6 +211,7 @@ var ClaimList = createReactClass({
       );
     }
   });
+
 var MakeClaim = createReactClass({
     handleInputAmount: function(amt){
     this.setState({amount:amt.target.value});
@@ -320,4 +324,6 @@ function HealthcareProvider() {
   );
 }
 
-export default HealthcareProvider;
+ReactDOM.render(<HealthcareProvider />, document.getElementById('root'));
+
+serviceWorker.unregister();

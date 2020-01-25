@@ -1,18 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
-import logo from './logo.svg';
-import './App.css';
-import * as serviceWorker from './serviceWorker';
 import Web3 from 'web3';
 import { Table, FormControl } from 'react-bootstrap';
-var web3;
-if (typeof window.web3 !== 'undefined') {
-  web3 = new Web3(window.web3.currentProvider);
-} else {
-  // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-}
+import createReactClass from 'create-react-class';
+import './App.css';
+import * as serviceWorker from './serviceWorker';
+
+//Setup Styles
 const inputStyle = {
   borderRadius:5,
   fontSize:15,
@@ -34,6 +28,15 @@ const buttonStyle = {
   color:"white",
   backgroundColor:"coral"
 };
+
+//Setup smart contracts
+var web3;
+if (typeof window.web3 !== 'undefined') {
+  web3 = new Web3(window.web3.currentProvider);
+} else {
+  // set the provider you want from Web3.providers
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
 //Accounts are managed by Metamask (or Mist, Geth)
 var accounts =["0xa1AF1C42DbF15D0795560AF5Fe0117542c99C8f4"];
 //Identity contract address

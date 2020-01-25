@@ -73,6 +73,7 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appHealthcareProviderJs: resolveModule(resolveApp, 'src/healthcareProvider'),
   appInsuranceProviderJs: resolveModule(resolveApp, 'src/insuranceProvider'),
   appIssuerJs: resolveModule(resolveApp, 'src/issuer'),
   appPatientJs: resolveModule(resolveApp, 'src/patient'),
