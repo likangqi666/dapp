@@ -1,68 +1,25 @@
-This project was bootstrHealthcareProvidered with [Create React HealthcareProvider](https://github.com/facebook/create-react-HealthcareProvider).
+This project is a prototype of a healthcare insurance management system. It is
+based on an Ethereum smart contract.
+My implementation is mainly under config/src folder. This implementation has only
+been briefly tested with Chrome. The unit test is pending for further implementation.
+The correct way of use this prototype is to create your own Ethereum address and
+access these page via Mist browser or other tools for Ethereum. But here for simplify
+the procedure I have created an address and hardcoded directly in the code. So
+all the transaction will be sent through this address.
+The address is "". If you are curious about the status of the address, you can
+ find the transaction history here:
 
-## Available Scripts
+This was an internship project. I planned to make it a conference paper. But I
+only have a contract for a limited time. So I don't have enough time to do the
+qualification. The draft version of the paper is . It was not sent out because of
+the missing qualification and verification. But this document may provide a more
+detailed information about the whole idea.
 
-In the project directory, you can run:
+To deploy the webpage:
+* Download this git repo
+* Execute `npm start` in the root path of the repo
+* The default host address is localhost:3000
 
-### `npm start`
-
-Runs the HealthcareProvider in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-HealthcareProvider/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the HealthcareProvider for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your HealthcareProvider is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-HealthcareProvider/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React HealthcareProvider documentation](https://facebook.github.io/create-react-HealthcareProvider/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web HealthcareProvider
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/making-a-progressive-web-HealthcareProvider
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-HealthcareProvider/docs/troubleshooting#npm-run-build-fails-to-minify
+Future work:
+* Unit test
+* A fancy and cool UI 
