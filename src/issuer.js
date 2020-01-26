@@ -384,21 +384,6 @@ function Issuer() {
             <h3 className = "App-innerHeader">Check Issuer Addres</h3>
             <CheckIssuer />
           </div>
-          // <Test />
-          // <Table >
-          //   <thead>
-          //     <tr>
-          //       <th>#</th>
-          //       <th>Address</th>
-          //     </tr>
-          //   </thead>
-          //   <tbody>
-          //     <tr>
-          //       <td></td>
-          //       <td></td>
-          //     </tr>
-          //   </tbody>
-          // </Table>
         </div>
       </div>
     );
