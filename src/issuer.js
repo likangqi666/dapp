@@ -35,12 +35,11 @@ if (typeof window.web3 !== 'undefined') {
   web3 = new Web3(window.web3.currentProvider);
 } else {
   // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  alert("You are not connected to Ethereum!");
+  //web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
-//Accounts are managed by Metamask (or Mist, Geth)
-var accounts =["0xa1AF1C42DbF15D0795560AF5Fe0117542c99C8f4"];
 //Identity contract address
-var contractAddress = "0x20eaf53fae5054422af523dcaf87a4fa7e9b70f2";
+var contractAddress = "0xeaf144c42c795d5bcf71993882a5900253de8471";
 var contractAbi = [{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_Type","type":"uint256"}],"name":"issueHP","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_issuer","type":"address"}],"name":"newIssuer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"}],"name":"issueIP","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"patient","type":"address"}],"name":"readID","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numHps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"user","type":"address"}],"name":"readIssuer","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"d","type":"uint256"}],"name":"setData","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_age","type":"uint256"},{"name":"_gender","type":"uint256"}],"name":"issuePatient","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"issuers","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_insPr","type":"address"}],"name":"readIns","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"adr","type":"address"}],"name":"isIssuer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIssuer","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hcPr","type":"address"}],"name":"readHc","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numPatient","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_trustee","type":"address"}],"name":"setTrustee","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_patient","type":"address"},{"name":"_trustee","type":"address"}],"name":"checkTrustee","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOne","type":"address"},{"indexed":false,"name":"issuer","type":"address"},{"indexed":false,"name":"id","type":"uint256"}],"name":"NewIssuer","type":"event"}];
 //Contract object
 var myContract = new web3.eth.Contract(contractAbi, contractAddress);
@@ -61,8 +60,8 @@ var IssuePatient = createReactClass({
     handleInputGender: function(gnd){
       this.setState({Gender:parseInt(gnd.target.value)});
     },
-    issueNewPatient: function(){
-
+    issueNewPatient: async function(){
+      var accounts = await ethereum.enable();
       myContract.methods.issuePatient(this.state.Address,
                                       this.state.BSN,
                                       this.state.Age,
@@ -120,10 +119,11 @@ var IssueIssuer = createReactClass({
     getInitialState: function (){
         return { address: ''};
     },
-    checkBSN: function(){
+    checkBSN: async function(){
     //myContract.issuePatient(this.state.address,this.state.BSN);
-                myContract.methods.newIssuer(String(this.state.address))
-                                  .call({from: accounts[0]},function(err,res){
+    var accounts = await ethereum.enable();
+    myContract.methods.newIssuer(String(this.state.address))
+                      .call({from: accounts[0]},function(err,res){
                                           console.log(res);
                                         });
     },
@@ -153,29 +153,29 @@ var IssueIssuer = createReactClass({
 
 var IssueHealthcareProvider = createReactClass({
     handleInputAddress: function(adr){
-    this.setState({address:adr.target.value});
-  },
+      this.setState({address:adr.target.value});
+    },
     getInitialState: function (){
-    return { address: '',id:'', type:1};
-  },
+      return { address: '',id:'', type:1};
+    },
     handleInputID: function(id){
-    this.setState({id: id.target.value});
+      this.setState({id: id.target.value});
     },
     handleInputType: function(type){
-    this.setState({type: type.target.value});
+      this.setState({type: type.target.value});
     },
-    issueHP: function(){
-                console.log(this.state.type);
-                myContract.methods.issueHP(this.state.address,this.state.id,this.state.type)
-                                  .call({from: accounts[0]},
-                                         function(err,res){
+    issueHP: async function(){
+      var accounts = await ethereum.enable();
+      myContract.methods.issueHP(this.state.address,this.state.id,this.state.type)
+                        .call({from: accounts[0]},
+                              function(err,res){
                                             if(!err){
                                               alert("Healthcare provider is added, transaction hash is:  " + String(res));
                                             }
                                         });
     },
     render: function() {
-              return (
+      return (
                 <div>
                   <p>
                     <input style={inputStyle}
@@ -213,22 +213,23 @@ var IssueHealthcareProvider = createReactClass({
 
 var AddInsuranceProvider = createReactClass({
     handleInputAddress: function(adr){
-            this.setState({address:adr.target.value});
+      this.setState({address:adr.target.value});
     },
     getInitialState: function (){
-            return { address: '',id:''};
+      return { address: '',id:''};
     },
     handleInputID: function(id){
-            this.setState({id: id.target.value});
+      this.setState({id: id.target.value});
     },
-    issueHP: function(){
-            myContract.methods.issueIP(this.state.address,this.state.id)
-                              .call({from: accounts[0]},function(err,res){
+    issueHP: async function(){
+      var accounts = await ethereum.enable();
+      myContract.methods.issueIP(this.state.address,this.state.id)
+                        .call({from: accounts[0]},function(err,res){
                                       console.log(res);
                               });
     },
     render: function() {
-              return (
+      return (
                 <div>
                   <input style={inputStyle}
                          placeholder = "New Insurance Provider Address"

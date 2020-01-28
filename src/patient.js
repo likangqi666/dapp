@@ -11,12 +11,12 @@ if (typeof window.web3 !== 'undefined') {
   web3 = new Web3(window.web3.currentProvider);
 } else {
   // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  alert("You are not connected to Ethereum!");
+  //web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
 //accounts are managed in Metamask (or Mist, Geth)
-var accounts =["0xa1AF1C42DbF15D0795560AF5Fe0117542c99C8f4"];
 //Identity contract address
-var contractAddress="0x20eaf53fae5054422af523dcaf87a4fa7e9b70f2";
+var contractAddress="0xeaf144c42c795d5bcf71993882a5900253de8471";
 //Identity contract ABI
 var contractAbi=[{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_Type","type":"uint256"}],"name":"issueHP","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_issuer","type":"address"}],"name":"newIssuer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"}],"name":"issueIP","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"patient","type":"address"}],"name":"readID","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numHps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"user","type":"address"}],"name":"readIssuer","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"d","type":"uint256"}],"name":"setData","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_age","type":"uint256"},{"name":"_gender","type":"uint256"}],"name":"issuePatient","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"issuers","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_insPr","type":"address"}],"name":"readIns","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"adr","type":"address"}],"name":"isIssuer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIssuer","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hcPr","type":"address"}],"name":"readHc","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numPatient","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_trustee","type":"address"}],"name":"setTrustee","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_patient","type":"address"},{"name":"_trustee","type":"address"}],"name":"checkTrustee","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"inputs":[{"name":"_issuer","type":"address"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOne","type":"address"},{"indexed":false,"name":"issuer","type":"address"},{"indexed":false,"name":"id","type":"uint256"}],"name":"NewIssuer","type":"event"}];
 //Identity contract object
@@ -87,8 +87,9 @@ var MyInfo = createReactClass({
   getInitialState: function(){
     return {BSN:"", Age:"", Gender:"", Issuer:""};
   },
-  getUserInfo: function(){
+  getUserInfo: async function(){
     var tempRes;
+    var accounts = await ethereum.enable();
     return new Promise(function(resolve, reject) {
       myContract.methods.readID(accounts[0])
                         .call({from: accounts[0]},function(err, res) {
@@ -99,7 +100,8 @@ var MyInfo = createReactClass({
     });
   },
   componentWillMount: async function(){
-    var result=await this.getUserInfo();
+    var result = await this.getUserInfo();
+    console.log(result[1]);
     this.setState({BSN:String(result[1]),
                    Age:String(result[3]),
                    Gender:String(result[2]),
@@ -142,8 +144,9 @@ var MyAdInfo = createReactClass({
   getInitialState: function(){
     return {curInfo:"",newInfo:""};
   },
-  getUserInfo: function(){
+  getUserInfo: async function(){
     var tempRes;
+    var accounts = await ethereum.enable();
     return new Promise(function(resolve, reject) {
       myContract.methods.readID(accounts[0])
                         .call({from: accounts[0]},function(err, res) {
@@ -163,7 +166,8 @@ var MyAdInfo = createReactClass({
   handleNewInfo: function(info){
     this.setState({newInfo: info.target.value});
   },
-  changeInfo: function(){
+  changeInfo: async function(){
+    var accounts = await ethereum.enable();
     myContract.methods.setInfo(this.state.newInfo)
                         .call({from: accounts[0]},function(err, res) {if(err) console.log(err);});
   },
@@ -197,7 +201,8 @@ var AddTrustPerson = createReactClass({
     handleInputBSN: function(bsn){
       this.setState({BSN: bsn.target.value});
     },
-    issueNewPatient: function(){
+    issueNewPatient: async function(){
+      var accounts = await ethereum.enable();
       myContract.methods.setTrustee(this.state.address)
                         .call({from: accounts[0]},function(err,res){
                                 console.log(res);
@@ -227,36 +232,38 @@ var policy;
 //Display applied claims
 var CheckClaims = createReactClass({
     getInitialState: function (){
-    return {
-      address: '',
-      providers:[],
-      pttSigs:[],
-      paidSigs:[],
-      items:[],
-      amounts:[],
-      list:[],
-      content:[],
-      claimID:''
-    };
+      return {
+        address: '',
+        providers:[],
+        pttSigs:[],
+        paidSigs:[],
+        items:[],
+        amounts:[],
+        list:[],
+        content:[],
+        claimID:''
+      };
   },
     handleInputAddress: function(adr){
-    policy=adr.target.value;
-    this.setState({address:adr.target.value});
+      policy=adr.target.value;
+      this.setState({address:adr.target.value});
   },
-    getClaims: function(){
-    var policyContract=new web3.eth.Contract(policyAbi, this.state.address);
-    var tempRes;
-    return new Promise (function(resolve,reject){
-        policyContract.methods.DisplayClaims()
-                              .call({from: accounts[0]},function(err,res){if (err) {
-                                        console.log(err);
-                                      }
-                              });
-      });
+    getClaims: async function(){
+      var policyContract=new web3.eth.Contract(policyAbi, this.state.address);
+      var tempRes;
+      var accounts = await ethereum.enable();
+      return new Promise (function(resolve,reject){
+          policyContract.methods.DisplayClaims()
+                                .call({from: accounts[0]},function(err,res){if (err) {
+                                          console.log(err);
+                                        }
+                                });
+        });
     },
-    getContent: function(e){
+    getContent: async function(e){
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
       var tempRes;
+      var accounts = await ethereum.enable();
       return new Promise(
         function(resolve,reject){
           policyContract.methods.ClaimContent(e)
@@ -306,8 +313,9 @@ var CheckClaims = createReactClass({
     cancelClaim: function(){
       this.setState({content:''});
     },
-    verifyClaim: function(e){
+    verifyClaim: async function(e){
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
+      var accounts = await ethereum.enable();
       policyContract.methods.VerifyClaim(e.target.value)
                             .call({from: accounts[0]},function(err,res){
                                     if(!err){
@@ -377,14 +385,15 @@ var CheckHP = createReactClass({
   getInitialState: function(){
     return {hcType:'',hcID:'',address:''};
   },
-  getUserInfo: function(adr){
+  getUserInfo: async function(adr){
     var tempRes;
+    var accounts = await ethereum.enable();
     return new Promise(function(resolve, reject) {
-      myContract.methods.readHc(adr)
-                        .call({from: accounts[0]},function(err, res) {
-                                 if (err) {
-                                   console.log(err);
-                                 }
+    myContract.methods.readHc(adr)
+                      .call({from: accounts[0]},function(err, res) {
+                              if (err) {
+                                console.log(err);
+                              }
                          });
     });
  },
@@ -439,7 +448,7 @@ function Patient() {
                   <MyAdInfo />
                 </div>
                 <div className="box">
-                  <h3 className="App-innerHeader">Add an trusted account</h3>
+                  <h3 className="App-innerHeader">Add trusted account</h3>
                   <AddTrustPerson />
                 </div>
                 <div className="box">

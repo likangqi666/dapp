@@ -28,10 +28,13 @@ var Subpage = createReactClass({
     switch (this.props.pageName) {
       case "Healthcare Provider":
         window.open("healthcareProvider.html");
+        break;
       case "Insurance Provider":
         window.open("insuranceProvider.html");
+        break;
       case "Issuer":
         window.open("issuer.html");
+        break;
       case "Patient":
         window.open("patient.html");
         break;

@@ -77,14 +77,13 @@ if (typeof window.web3 !== 'undefined') {
   web3 = new Web3(window.web3.currentProvider);
 } else {
   // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  alert("You are not connected to Ethereum!");
+  //web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
 //Before Metamask can automatically inject web3 and return the default accounts,
 //but this feature has been removed. So I have to hardcode the account here;
-//var accounts = web3.eth.accounts;
-var accounts =["0xa1AF1C42DbF15D0795560AF5Fe0117542c99C8f4"];
 var policy;
-var contractAddress = "0x20eaf53fae5054422af523dcaf87a4fa7e9b70f2";
+var contractAddress = "0xeaf144c42c795d5bcf71993882a5900253de8471";
 var contractAbi = [{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_Type","type":"uint256"}],"name":"issueHP","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_issuer","type":"address"}],"name":"newIssuer","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"}],"name":"issueIP","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"patient","type":"address"}],"name":"readID","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numHps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"user","type":"address"}],"name":"readIssuer","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"d","type":"uint256"}],"name":"setData","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_id","type":"uint256"},{"name":"_age","type":"uint256"},{"name":"_gender","type":"uint256"}],"name":"issuePatient","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"issuers","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIps","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_insPr","type":"address"}],"name":"readIns","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"adr","type":"address"}],"name":"isIssuer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numIssuer","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hcPr","type":"address"}],"name":"readHc","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_info","type":"string"}],"name":"setInfo","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"numPatient","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_trustee","type":"address"}],"name":"setTrustee","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_patient","type":"address"},{"name":"_trustee","type":"address"}],"name":"checkTrustee","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOne","type":"address"},{"indexed":false,"name":"issuer","type":"address"},{"indexed":false,"name":"id","type":"uint256"}],"name":"NewIssuer","type":"event"}];
 var myContract = new web3.eth.Contract(contractAbi, contractAddress);
 var policyAbi =[{"constant":true,"inputs":[],"name":"ReadProvider","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"patient","type":"address"}],"name":"readID","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"ReadOwner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"i","type":"uint256"}],"name":"ClaimContent","outputs":[{"name":"","type":"uint256[]"},{"name":"","type":"uint256[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_insPr","type":"address"}],"name":"readIns","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_hcPr","type":"address"}],"name":"readHc","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_item","type":"uint256"},{"name":"_balance","type":"uint256"}],"name":"SetBalance","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_pr","type":"address"},{"name":"_amount","type":"uint256[]"},{"name":"_item","type":"uint256[]"},{"name":"num","type":"uint256"}],"name":"MakeClaim","outputs":[{"name":"","type":"int256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"DisplayClaims","outputs":[{"name":"providers","type":"address[]"},{"name":"pttSigs","type":"bool[]"},{"name":"paidSigs","type":"bool[]"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_item","type":"uint256"},{"name":"_amount","type":"uint256"}],"name":"CheckBalance","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},{"name":"_pr","type":"address"}],"name":"SetOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"i","type":"uint256"}],"name":"ClaimAudit","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_patient","type":"address"},{"name":"_trustee","type":"address"}],"name":"checkTrustee","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"i","type":"uint256"}],"name":"VerifyClaim","outputs":[],"payable":false,"type":"function"},{"inputs":[{"name":"_p","type":"address"}],"type":"constructor"}];
@@ -94,10 +93,11 @@ var MyInfo = createReactClass({
   getInitialState: function(){
     return {IncID:''};
   },
-  getUserInfo: function(){
-                  var tempRes;
-                  return new Promise(function(resolve, reject) {
-                      myContract.methods.readIns(accounts[0]).call(
+  getUserInfo: async function(){
+    var tempRes;
+    var accounts = await ethereum.enable();
+    return new Promise(function(resolve, reject) {
+              myContract.methods.readIns(accounts[0]).call(
                              {from: accounts[0]},
                              function(err, res) {
                                if (err) {
@@ -107,11 +107,16 @@ var MyInfo = createReactClass({
                                resolve(tempRes);
                                }
                              });
-                 })
+          })
   },
   componentWillMount: async function(){
-                        var result = await this.getUserInfo();
-                        this.setState({IncID:String(result)});
+    var result = await this.getUserInfo();
+    if(result == 0){
+      alert("You are not using a registered insurance provider account!");
+      this.setState({IncID:"Illegal account!"});
+    }else{
+      this.setState({IncID:String(result)});
+    }
   },
   render: function(){
             return(
@@ -129,9 +134,10 @@ var CheckID = createReactClass({
   getInitialState: function(){
     return {BSN:"", Age:"", Gender:"", Issuer:"",address:''};
   },
-  getUserInfo: function(){
+  getUserInfo: async function(){
     var tempRes;
     var userAddress = this.state.address;
+    var accounts = await ethereum.enable();
     return new Promise(function(resolve, reject) {
     myContract.methods.readID(userAddress).call(
            {from: accounts[0]},
@@ -209,8 +215,9 @@ var SetOwner = createReactClass({
     this.setState({bnfAddress: owner.target.value});
   },
 
-  setBeneficiay: function(){
+  setBeneficiay: async function(){
     var policyContract = new web3.eth.Contract(policyAbi,this.state.cntAddress);
+    var accounts = await ethereum.enable();
     policyContract.methods.SetOwner(this.state.bnfAddress,contractAddress)
                           .call(
                             {from: accounts[0]},
@@ -258,9 +265,10 @@ var CheckClaims = createReactClass({
     policy = adr.target.value;
     this.setState({address:adr.target.value});
   },
-    getClaims: function(){
+    getClaims: async function(){
         var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
         var tempRes;
+        var accounts = await ethereum.enable();
         return new Promise (function(resolve,reject){
           policyContract.methods.DisplayClaims()
                                 .call(
@@ -276,9 +284,10 @@ var CheckClaims = createReactClass({
                                 );
         });
      },
-     getContent: function(e){
+     getContent: async function(e){
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
       var tempRes;
+      var accounts = await ethereum.enable();
       return new Promise(
         function(resolve,reject){
           policyContract.methods.ClaimContent(e)
@@ -337,8 +346,9 @@ var CheckClaims = createReactClass({
     cancelClaim: function(){
       this.setState({content:''});
     },
-    verifyClaim: function(e){
+    verifyClaim: async function(e){
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
+      var accounts = await ethereum.enable();
       policyContract.methods.ClaimAudit(e.target.value)
                             .call(
                               {from: accounts[0]},
@@ -401,10 +411,9 @@ var SetCoverage = createReactClass({
   handleContractAddress: function(adr){
   this.setState({address:adr.target.value});
   },
-  coverItem: function(i){
+  coverItem: async function(i){
     var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
-    console.log(this.state.address);
-    console.log(i.target.value);
+    var accounts = await ethereum.enable();
     policyContract.methods.SetBalance(i.target.value,1)
                           .call(
                             {from:accounts[0]},
