@@ -38,6 +38,7 @@ To use this prototype:
   own Ethereum account. But in order to simplify this procedure, I have created
   several testing accounts and deposited some Ether to these accounts. The
   private keys are listed below:
+
   | Accounts            | Private Key                                                      |
   | ------------------- |:----------------------------------------------------------------:|
   |Issuer               | 1BAE5C35433A946DE45FDA652B37719A8D5A064B68B48AF2772298515C1F5451 |
@@ -46,6 +47,7 @@ To use this prototype:
   |Insurance  Provider  | 78AE9EE7AEBDA81AA462CA3FD88C5F484E1DA4385AD40D63521E70862A0D2460 |
   |Patient 1            | 0F73502AC03036252784308CD96AB51B1FBDBC2C9D17A71DD9DAF1DE8726735E |
   |Patient 2            | AFAA3FAC000FCA616FBEB4E6B4D7E019E27C61B5EAE11E70C92C9A102FC7522E |
+  
 * These accounts are already added to the testing smart contract. You can import
   them in your wallet through the private key. If you want to   use your own
   account you need to use the 'issuer' account and the issuer interface   to add

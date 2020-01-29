@@ -88,20 +88,26 @@ var MyInfo = createReactClass({
     return {BSN:"", Age:"", Gender:"", Issuer:""};
   },
   getUserInfo: async function(){
-    var tempRes;
     var accounts = await ethereum.enable();
+    var tempRes;
     return new Promise(function(resolve, reject) {
       myContract.methods.readID(accounts[0])
-                        .call({from: accounts[0]},function(err, res) {
-                                 if (err) {
-                                   console.log(err);
-                                 }
-                         });
+                        .call({from: accounts[0]},
+                              function(err, res) {
+                               if (err) {
+                                 console.log(err);
+                               } else {
+                                 tempRes = res;
+                                 resolve(tempRes);
+                               }
+                              });
     });
   },
   componentWillMount: async function(){
     var result = await this.getUserInfo();
-    console.log(result[1]);
+    if(result[4] == 0){
+      alert("You are not using a registered patient account!")
+    }
     this.setState({BSN:String(result[1]),
                    Age:String(result[3]),
                    Gender:String(result[2]),
@@ -205,7 +211,7 @@ var AddTrustPerson = createReactClass({
       var accounts = await ethereum.enable();
       myContract.methods.setTrustee(this.state.address)
                         .call({from: accounts[0]},function(err,res){
-                                console.log(res);
+                                alert("New trusted account is added.");
                          });
     },
     render: function() {

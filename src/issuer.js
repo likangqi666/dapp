@@ -62,11 +62,17 @@ var IssuePatient = createReactClass({
     },
     issueNewPatient: async function(){
       var accounts = await ethereum.enable();
+      console.log(accounts);
+      console.log(this.state.Address);
       myContract.methods.issuePatient(this.state.Address,
                                       this.state.BSN,
                                       this.state.Age,
                                       this.state.Gender)
-                        .call({from:accounts[0]},function(err,res){});
+                        .call({from:accounts[0]},function(err,res){
+                            if(!err) {
+                              alert("New patient account has been registered!");
+                            }
+                        });
     },
     render: function() {
               return (
@@ -224,9 +230,7 @@ var AddInsuranceProvider = createReactClass({
     issueHP: async function(){
       var accounts = await ethereum.enable();
       myContract.methods.issueIP(this.state.address,this.state.id)
-                        .call({from: accounts[0]},function(err,res){
-                                      console.log(res);
-                              });
+                        .call({from: accounts[0]});
     },
     render: function() {
       return (
@@ -333,7 +337,8 @@ var CheckIssuer = createReactClass({
       adr:adr.target.value
     });
   },
-  checkIdentity: function(){
+  checkIdentity: async function(){
+    var accounts = await ethereum.enable();
     myContract.methods.isIssuer(this.state.adr)
                       .call({from: accounts[0]},function(err,res){
                               if (res){
@@ -366,15 +371,15 @@ function Issuer() {
         </p>
         <div className = "App-body">
           <div className = "box">
-            <h3 className = "App-innerHeader">Add a New User </h3>
+            <h3 className = "App-innerHeader">Add a New Patient Account </h3>
             <IssuePatient />
           </div>
           <div className = "box">
-            <h3 className = "App-innerHeader">Add a New Issuer </h3>
+            <h3 className = "App-innerHeader">Add a New Issuer Account </h3>
             <IssueIssuer />
           </div>
           <div className = "box">
-            <h3 className = "App-innerHeader">Add a New Healthcare Provider</h3>
+            <h3 className = "App-innerHeader">Add a New Healthcare Provider Account</h3>
             <IssueHealthcareProvider />
           </div>
           <div className = "box">
