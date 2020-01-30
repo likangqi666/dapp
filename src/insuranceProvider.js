@@ -219,7 +219,7 @@ var SetOwner = createReactClass({
     var policyContract = new web3.eth.Contract(policyAbi,this.state.cntAddress);
     var accounts = await ethereum.enable();
     policyContract.methods.SetOwner(this.state.bnfAddress,contractAddress)
-                          .call(
+                          .send(
                             {from: accounts[0]},
                             function(err,res){
                               if(!err){
@@ -350,7 +350,7 @@ var CheckClaims = createReactClass({
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
       var accounts = await ethereum.enable();
       policyContract.methods.ClaimAudit(e.target.value)
-                            .call(
+                            .send(
                               {from: accounts[0]},
                               function(err,res){
                                 if(!err){
@@ -370,7 +370,9 @@ var CheckClaims = createReactClass({
             <td>{this.state.providers[i]}</td>
             <td>{String(this.state.pttSigs[i])}</td>
             <td>{String(this.state.paidSigs[i])}</td>
-            <td><button style={{fontSize:8, backgroundColor:"coral",borderRadius:5,color:"white"}} onClick = {this.showContent} value = {i}>Show</button></td>
+            <td><button style={{fontSize:8, backgroundColor:"coral",borderRadius:5,color:"white"}}
+                        onClick = {this.showContent}
+                        value = {i}>Show</button></td>
           </tr>
         );
       };
@@ -415,7 +417,7 @@ var SetCoverage = createReactClass({
     var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
     var accounts = await ethereum.enable();
     policyContract.methods.SetBalance(i.target.value,1)
-                          .call(
+                          .send(
                             {from:accounts[0]},
                             function(err,res){
                               if(!err){

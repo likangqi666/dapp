@@ -175,7 +175,7 @@ var MyAdInfo = createReactClass({
   changeInfo: async function(){
     var accounts = await ethereum.enable();
     myContract.methods.setInfo(this.state.newInfo)
-                        .call({from: accounts[0]},function(err, res) {if(err) console.log(err);});
+                        .send({from: accounts[0]},function(err, res) {if(err) console.log(err);});
   },
   render: function(){
     return(
@@ -210,7 +210,7 @@ var AddTrustPerson = createReactClass({
     issueNewPatient: async function(){
       var accounts = await ethereum.enable();
       myContract.methods.setTrustee(this.state.address)
-                        .call({from: accounts[0]},function(err,res){
+                        .send({from: accounts[0]},function(err,res){
                                 alert("New trusted account is added.");
                          });
     },
@@ -323,7 +323,7 @@ var CheckClaims = createReactClass({
       var policyContract = new web3.eth.Contract(policyAbi, this.state.address);
       var accounts = await ethereum.enable();
       policyContract.methods.VerifyClaim(e.target.value)
-                            .call({from: accounts[0]},function(err,res){
+                            .send({from: accounts[0]},function(err,res){
                                     if(!err){
                                       alert("Claim verified: "+String(res));
                                     }

@@ -236,7 +236,7 @@ var MakeClaim = createReactClass({
                                        this.state.amounts,
                                        this.state.items,
                                        this.state.amounts.length)
-                            .call({from: accounts[0]},
+                            .send({from: accounts[0]},
                                   function(err, res) {
                                    if (err) {
                                      console.log(err);

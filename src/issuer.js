@@ -62,13 +62,11 @@ var IssuePatient = createReactClass({
     },
     issueNewPatient: async function(){
       var accounts = await ethereum.enable();
-      console.log(accounts);
-      console.log(this.state.Address);
       myContract.methods.issuePatient(this.state.Address,
                                       this.state.BSN,
                                       this.state.Age,
                                       this.state.Gender)
-                        .call({from:accounts[0]},function(err,res){
+                        .send({from:accounts[0]},function(err,res){
                             if(!err) {
                               alert("New patient account has been registered!");
                             }
@@ -129,9 +127,11 @@ var IssueIssuer = createReactClass({
     //myContract.issuePatient(this.state.address,this.state.BSN);
     var accounts = await ethereum.enable();
     myContract.methods.newIssuer(String(this.state.address))
-                      .call({from: accounts[0]},function(err,res){
-                                          console.log(res);
-                                        });
+                      .send({from: accounts[0]},function(err,res){
+                            if(!err){
+                              alert("New issuer account has been registered!")
+                            }
+                          });
     },
     render: function() {
       return (
@@ -173,12 +173,13 @@ var IssueHealthcareProvider = createReactClass({
     issueHP: async function(){
       var accounts = await ethereum.enable();
       myContract.methods.issueHP(this.state.address,this.state.id,this.state.type)
-                        .call({from: accounts[0]},
+                        .send({from: accounts[0]},
                               function(err,res){
-                                            if(!err){
-                                              alert("Healthcare provider is added, transaction hash is:  " + String(res));
-                                            }
-                                        });
+                                if(!err){
+                                  alert("New healthcare provider account has been registered:  "
+                                        + String(res));
+                                }
+                        });
     },
     render: function() {
       return (
@@ -230,7 +231,11 @@ var AddInsuranceProvider = createReactClass({
     issueHP: async function(){
       var accounts = await ethereum.enable();
       myContract.methods.issueIP(this.state.address,this.state.id)
-                        .call({from: accounts[0]});
+                        .send({from: accounts[0]}, function(err,res){
+                          if(!err){
+                            alert("New insurance provider account has been registered.");
+                          }
+                        });
     },
     render: function() {
       return (
